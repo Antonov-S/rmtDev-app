@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useActiveId, useJobItem, useJobItems } from "../lib/hooks";
+import { useJobItems } from "../lib/hooks";
 
 import Background from "./Background";
 import Container from "./Container";
@@ -19,8 +19,6 @@ import PaginationControls from "./PaginationControls";
 function App() {
   const [searchText, setSearchText] = useState("");
   const [jobItems, isLoading] = useJobItems(searchText);
-  const activeId = useActiveId();
-  const jobItem = useJobItem(activeId);
 
   return (
     <>
