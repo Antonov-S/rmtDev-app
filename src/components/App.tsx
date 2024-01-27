@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useJobItems } from "../lib/hooks";
+import { useDebounce, useJobItems } from "../lib/hooks";
 
 import Background from "./Background";
 import Container from "./Container";
@@ -18,8 +18,9 @@ import PaginationControls from "./PaginationControls";
 
 function App() {
   const [searchText, setSearchText] = useState("");
+  const debouncedSearchText = useDebounce(searchText, 350);
   const { jobItemsSliced, isLoading, totalNumberOfResults } =
-    useJobItems(searchText);
+    useJobItems(debouncedSearchText);
 
   return (
     <>
