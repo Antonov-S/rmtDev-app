@@ -41,7 +41,7 @@ export const useJobItem = (id: number | null) => {
     fetchJobItem();
   }, [id]);
 
-  return [jobItem, isLoading] as const;
+  return { jobItem, isLoading } as const;
 };
 
 export const useJobItems = (searchText: string) => {
@@ -65,5 +65,5 @@ export const useJobItems = (searchText: string) => {
     fetchData();
   }, [searchText]);
 
-  return [jobItemsSliced, isLoading, totalNumberOfResults] as const;
+  return { jobItemsSliced, isLoading, totalNumberOfResults } as const;
 };
