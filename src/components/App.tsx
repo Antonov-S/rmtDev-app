@@ -21,8 +21,8 @@ function App() {
   const debouncedSearchText = useDebounce(searchText, 350);
   const { jobItems, isLoading } = useJobItems(debouncedSearchText);
 
-  const jobItemsSliced = jobItems.slice(0, 7);
-  const totalNumberOfResults = jobItems.length;
+  const jobItemsSliced = jobItems?.slice(0, 7) || [];
+  const totalNumberOfResults = jobItems?.length || 0;
 
   return (
     <>
