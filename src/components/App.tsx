@@ -17,7 +17,7 @@ import ResultsCount from "./ResultsCount";
 import SortingControls from "./SortingControls";
 import JobList from "./JobList";
 import PaginationControls from "./PaginationControls";
-import { SortBy } from "../lib/types";
+import { PageDirection, SortBy } from "../lib/types";
 
 function App() {
   // state
@@ -44,7 +44,7 @@ function App() {
   const totalNumberOfPages = totalNumberOfResults / RESULTS_PER_PAGE;
 
   // actions
-  const handleChangePage = (direction: "next" | "previous") => {
+  const handleChangePage = (direction: PageDirection) => {
     if (direction === "next") {
       setCurrentPage(prev => prev + 1);
     } else if (direction === "previous") {
