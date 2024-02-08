@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 
-import { useDebounce, useJobItems } from "../lib/hooks";
+import { useDebounce, useSearchQuery } from "../lib/hooks";
 import { RESULTS_PER_PAGE } from "../lib/constants";
 
 import Background from "./Background";
@@ -23,7 +23,7 @@ function App() {
   // state
   const [searchText, setSearchText] = useState("");
   const debouncedSearchText = useDebounce(searchText, 350);
-  const { jobItems, isLoading } = useJobItems(debouncedSearchText);
+  const { jobItems, isLoading } = useSearchQuery(debouncedSearchText);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState<SortBy>("relevant");
 

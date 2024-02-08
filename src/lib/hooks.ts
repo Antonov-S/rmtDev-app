@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 
 import { BASE_URL } from "./constants";
 import { JobItem, JobItemExpanded } from "./types";
@@ -42,6 +42,30 @@ export const useJobItem = (id: number | null) => {
   return { jobItem, isLoading } as const;
 };
 
+export function useJobItems(ids: number[]) {
+  const results = useQueries({
+    queries: ids.map(id => ({
+      queryKey: ["job-item", id],
+      queryFn: () => fetchJobItem(id),
+      staleTime: 1000 * 60 * 60,
+      refetchOnWindowFocus: false,
+      retry: false,
+      enabled: Boolean(id),
+      onError: handleError
+    }))
+  });
+
+  const jobItems = results
+    .map(result => result.data?.jobItem)
+    .filter(jobItem => jobItem !== undefined);
+  const isLoading = results.some(result => result.isLoading);
+
+  return {
+    jobItems,
+    isLoading
+  };
+}
+
 // -----------------------------------------------------------------
 
 type JobItemsApiResponse = {
@@ -63,7 +87,7 @@ const fetchJobItems = async (
   return data;
 };
 
-export const useJobItems = (searchText: string) => {
+export const useSearchQuery = (searchText: string) => {
   const { data, isInitialLoading } = useQuery(
     ["job-items", searchText],
     () => fetchJobItems(searchText),
